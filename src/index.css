@@ -23,13 +23,6 @@ h1{
   text-align: center;
 }
 
-nav{
-  display: flex;
-  width: 80vw;
-  justify-content: flex-start;
-  padding: 1rem;
-}
-
 a{
   color: #000;
   text-decoration: none;
