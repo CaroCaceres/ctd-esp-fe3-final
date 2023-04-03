@@ -1,0 +1,18 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 1rem;
+}
+
+#logo {
+    font-size: 1.5rem;
+}
+
+#themeToggler {
+  /* Quitar todos los estilos de un button */
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
