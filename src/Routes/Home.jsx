@@ -1,30 +1,35 @@
-import { useContext, useEffect } from 'react'
-import Card from '../Components/Card'
-import { ContextGlobal } from '../Components/utils/global.context'
+import React, { useContext, useEffect } from 'react';
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+// Components
+import Card from '../Components/Card';
 
-const Home = () => {
-  const { dataProvider } = useContext(ContextGlobal);
+// Context
+import { ContextGlobal } from '../Components/utils/global.context';
+
+// Styles
+import './Home.css';
+
+function Home() {
+  const { dataProvider, themeProvider } = useContext(ContextGlobal);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(data => dataProvider.setData(data))
+      .then((response) => response.json())
+      .then((data) => dataProvider.setData(data));
   }, []);
 
   return (
-    <main className="" >
+    <main className={themeProvider.theme.value}>
       <h1>Home</h1>
-      <div className='card-grid'>
-        {/* Aqui deberias renderizar las cards ✅ */
+      <div className="card-grid">
+        {
           dataProvider.data.map((user) => (
-            <Card id={user.id} name={user.name} username={user.username} key={user.id}/>
+            <Card id={user.id} name={user.name} username={user.username} key={user.id} />
           ))
         }
       </div>
     </main>
-  )
+  );
 }
 
-export default Home
+export default Home;

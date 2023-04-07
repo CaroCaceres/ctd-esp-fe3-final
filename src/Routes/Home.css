@@ -1,0 +1,13 @@
+main h1 {
+  margin: 0;
+  padding: 2rem;
+}
+
+main div.card-grid {
+  padding-bottom: 2rem;
+}
+
+/* ===== dark style ===== */
+main.dark a {
+  color: white;
+}
