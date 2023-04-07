@@ -1,83 +1,82 @@
-import React, { useEffect, useReducer } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useReducer } from 'react';
+import { Link } from 'react-router-dom';
 
 // Styles
-import "./Card.css";
+import './Card.css';
 
-// Utils
-const uuidGenerator = ({ name, username, id }) => {
-  return `${username}-${id}-${name}`;
-}
+// Context
+import {ContextGlobal} from './utils/global.context';
 
+function Card({ name, username, id }) {
+  const {favDentistsProvider} = useContext(ContextGlobal);
 
-
-const Card = ({ name, username, id }) => {
   const addFav = (state, action) => {
-    // Aqui iria la logica para agregar la Card en el localStorage ✅
-    const dentists = JSON.parse(localStorage.getItem("favsDentists")) || [];
-    const username = dentists.find(
-      (dentist) => dentist.username === action.payload.username
+    const dentists = JSON.parse(localStorage.getItem('favDentists')) || [];
+    const usernameLocalStorage = dentists.find(
+      (dentist) => dentist.username === action.payload.username,
     );
     switch (action.type) {
-      case "CHECK_FAV":
-        if (username) {
+      case 'CHECK_FAV':
+        if (usernameLocalStorage) {
           return { added: true };
         }
         return { added: false };
-      case "ADD_FAV":
+      case 'ADD_FAV':
         dentists.push(action.payload);
         localStorage.setItem(
-          "favsDentists",
-          JSON.stringify(dentists)
+          'favDentists',
+          JSON.stringify(dentists),
         );
         alert(`username: ${action.payload.username} added to favorites`);
+        favDentistsProvider.setFavDentists(dentists);
         return { added: !state.added };
-      case "REMOVE_FAV":
+      case 'REMOVE_FAV':
         dentists.splice(dentists.indexOf(action.payload), 1);
         localStorage.setItem(
-          "favsDentists",
-          JSON.stringify(dentists)
-        )
+          'favDentists',
+          JSON.stringify(dentists),
+        );
         alert(`username: ${action.payload.username} removed from favorites`);
+        favDentistsProvider.setFavDentists(dentists);
         return { added: !state.added };
       default:
         throw new Error();
     }
-  }
+  };
 
   const [fav, dispatch] = useReducer(
     addFav,
     {
-      added: false
-    }
-  )
+      added: false,
+    },
+  );
 
   useEffect(() => {
-    dispatch({ type: "CHECK_FAV", payload: { name, username, id } });
-  }, []);
+    dispatch({ type: 'CHECK_FAV', payload: { name, username, id } });
+  }, [id, name, username]);
 
   return (
     <div className="card">
-      {/* En cada card deberan mostrar en name - username y el id ✅ */}
-      {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle ✅ */}
-      <img src={"/images/doctor.jpg"} alt="dentist" id="doctor" />
+      <img src="/images/doctor.jpg" alt="dentist" id="doctor" />
       <Link to={`/dentist/${id}`}>
         <h3>{name}</h3>
       </Link>
       <p>{username}</p>
-
-      {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage ✅ */}
-      <button onClick={() => {
-        if (fav.added) {
-          dispatch({ type: "REMOVE_FAV", payload: { id, name, username } });
-        } else {
-          dispatch({ type: "ADD_FAV", payload: { id, name, username } });
-        }
-        // Recarga la pagina cada vez que se agrega o elimina un favorito
-        window.location.reload();
-      }} className="favButton">{ fav.added === true ? '⭐️' : '☆' }</button>
+      <button
+        type="button"
+        onClick={() => {
+          if (fav.added) {
+            dispatch({ type: 'REMOVE_FAV', payload: { id, name, username } });
+          } else {
+            dispatch({ type: 'ADD_FAV', payload: { id, name, username } });
+          }
+        }}
+        className="favButton"
+      >
+        { fav.added === true ? '⭐️' : '☆' }
+      </button>
     </div>
   );
-};
+}
 
 export default Card;
