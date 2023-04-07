@@ -1,0 +1,16 @@
+footer {
+  border-top: 1px solid black;
+}
+
+footer img {
+  margin-left: 1rem;
+}
+
+/* ======== dark style ======== */
+footer.dark {
+  border-top: 1px solid white;
+}
+
+footer.dark img {
+  background-color: white;
+}
