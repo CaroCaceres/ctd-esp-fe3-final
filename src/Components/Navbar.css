@@ -1,8 +1,10 @@
 nav {
     display: flex;
     justify-content: space-between;
-    width: 90%;
-    margin: 1rem;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-bottom: 1px solid black;
 }
 
 #logo {
@@ -10,9 +12,38 @@ nav {
 }
 
 #themeToggler {
-  /* Quitar todos los estilos de un button */
     background: none;
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+nav a {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+/* ====== dark style ====== */
+.dark {
+  background-color: black;
+  color: white;
+}
+
+nav.dark {
+  border-bottom: 1px solid white;
+}
+
+nav.dark a {
+  color: white;
+}
+
+/* ========= MOBILE ======= */
+@media only screen and (max-width: 768px) {
+  nav {
+    padding: 1rem;
+  }
+  nav a {
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+  }
 }
