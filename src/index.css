@@ -1,3 +1,8 @@
+html,body {
+  margin: 0;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,12 +16,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.favButton{
-  background-color: rgba(136, 136, 136, 0.116);
-  padding: 10px;
-  border: none;
-  width: 100%;
-  cursor: pointer;
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#root #app {
+  height: 100%;
 }
 
 h1{
@@ -37,12 +46,11 @@ footer {
   display: flex;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
   position: relative;
   bottom: 0;
-  width: 90%;
   height: 40px;
-  margin-top: 2rem;
 }
 
 footer > img{
@@ -69,7 +77,6 @@ form{
   flex-direction: column;
   align-items: center;
   width: 200px;
-  padding: 0.5rem 0.5rem 0 0.5rem;
   border: 0.5px solid rgb(136, 136, 136);
 }
 
@@ -104,12 +111,4 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-
-.dark{
-  background-color: #12121296;
-  color: white;
-}
-.dark > a {
-  color: white;
 }
