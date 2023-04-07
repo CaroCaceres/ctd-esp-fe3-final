@@ -1,23 +1,25 @@
-import { createContext, useMemo, useState } from "react";
+import React, { createContext, useMemo, useState } from 'react';
 
 export const initialState = {
   theme: {
     light: {
-      background: "white",
-      color: "black",
+      background: 'white',
+      color: 'black',
+      value: 'light',
     },
     dark: {
-      background: "black",
-      color: "white",
-    }
+      background: 'black',
+      color: 'white',
+      value: 'dark',
+    },
   },
-  data: []
-}
+  data: [],
+  favDentists: JSON.parse(localStorage.getItem('favDentists')) || [],
+};
 
 export const ContextGlobal = createContext(initialState);
 
-export const ContextProvider = ({ children }) => {
-  //Aqui deberan implementar la logica propia del Context, utilizando el hook useMemo
+export function ContextProvider({ children }) {
   // Maneja el estado de la data
   const [data, setData] = useState(initialState.data);
   const dataProvider = useMemo(() => ({ data, setData }), [data, setData]);
@@ -25,15 +27,18 @@ export const ContextProvider = ({ children }) => {
   // Maneja el estado del theme
   const [theme, setTheme] = useState(initialState.theme.light);
   const toggleTheme = () => {
-    initialState.theme.dark === theme
-    ? setTheme(initialState.theme.light)
-    : setTheme(initialState.theme.dark);
+    if (initialState.theme.dark === theme) setTheme(initialState.theme.light);
+    else setTheme(initialState.theme.dark);
   };
   const themeProvider = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
+  // Maneja el estado de los dentistas marcados como favoritos
+  const [favDentists, setFavDentists] = useState(initialState.favDentists);
+  const favDentistsProvider = useMemo(() => ({ favDentists, setFavDentists }), [favDentists, setFavDentists]);
+
   return (
-    <ContextGlobal.Provider value={{dataProvider, themeProvider}}>
+    <ContextGlobal.Provider value={{ dataProvider, themeProvider, favDentistsProvider }}>
       {children}
     </ContextGlobal.Provider>
   );
-};
+}
